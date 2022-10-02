@@ -71,20 +71,26 @@ class Song {
   }
 }
 
-const song = new Song("check-mii-out-channel-submission-plaza-theme.mp3");
+const song = new Song(
+  `${import.meta.env.BASE_URL}check-mii-out-channel-submission-plaza-theme.mp3`
+);
 
 export function Face() {
   const ref = useRef<Mesh>(null!);
 
   const [state, send] = useMachine(machine);
 
-  const mtl = useLoader(MTLLoader, "./model.mtl");
-  const obj = useLoader(OBJLoader, "./model.obj", (loader) => {
-    mtl.preload();
-    // TODO fix ts-ignore
-    // @ts-ignore-next-line
-    loader.setMaterials(mtl);
-  });
+  const mtl = useLoader(MTLLoader, `${import.meta.env.BASE_URL}model.mtl`);
+  const obj = useLoader(
+    OBJLoader,
+    `${import.meta.env.BASE_URL}model.obj`,
+    (loader) => {
+      mtl.preload();
+      // TODO fix ts-ignore
+      // @ts-ignore-next-line
+      loader.setMaterials(mtl);
+    }
+  );
 
   useFrame((_, delta) => {
     if (!ref.current) return;
