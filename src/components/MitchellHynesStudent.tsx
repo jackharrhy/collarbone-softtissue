@@ -7,11 +7,10 @@ import { Resolution, KernelSize, BlendFunction } from "postprocessing";
 import { Canvas } from "@react-three/fiber";
 import { Vector2 } from "three";
 
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import { useEffect, useRef, useState } from "react";
-import { useFrame, useLoader } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
+import { useMitch } from "../hooks/useMitch";
 
 if (import.meta.hot) {
   import.meta.hot.decline();
@@ -20,14 +19,7 @@ if (import.meta.hot) {
 function Face() {
   const ref = useRef<Mesh>(null!);
   const [target, setTarget] = useState({ x: 0, y: (-30 * 3.14) / 180 });
-
-  const mtl = useLoader(MTLLoader, "./model.mtl");
-  const obj = useLoader(OBJLoader, "./model.obj", (loader) => {
-    mtl.preload();
-    // TODO fix ts-ignore
-    // @ts-ignore-next-line
-    loader.setMaterials(mtl);
-  });
+  const { obj } = useMitch();
 
   useEffect(() => {
     if (!ref.current) return;

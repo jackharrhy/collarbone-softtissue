@@ -6,6 +6,7 @@ import { useLoader } from "@react-three/fiber";
 import { Mesh } from "three";
 import { createMachine } from "xstate";
 import { useMachine } from "@xstate/react";
+import { useMitch } from "../hooks/useMitch";
 
 if (import.meta.hot) {
   import.meta.hot.decline();
@@ -39,20 +40,6 @@ const machine = createMachine({
   },
 });
 
-/*
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const fn = () => {
-      ref.current.rotation.x = (Math.random() > 0.5 ? 25 : -25 * 3.14) / 180;
-      ref.current.rotation.y = Math.random() * (3.14 / 2) - 3.14 / 4;
-    };
-
-    const intervalId = setInterval(fn, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
-*/
-
 class Song {
   audio: HTMLAudioElement;
 
@@ -78,19 +65,9 @@ const song = new Song(
 export function Face() {
   const ref = useRef<Mesh>(null!);
 
-  const [state, send] = useMachine(machine);
+  // const [state, send] = useMachine(machine);
 
-  const mtl = useLoader(MTLLoader, `${import.meta.env.BASE_URL}model.mtl`);
-  const obj = useLoader(
-    OBJLoader,
-    `${import.meta.env.BASE_URL}model.obj`,
-    (loader) => {
-      mtl.preload();
-      // TODO fix ts-ignore
-      // @ts-ignore-next-line
-      loader.setMaterials(mtl);
-    }
-  );
+  const { obj } = useMitch();
 
   useFrame((_, delta) => {
     if (!ref.current) return;
