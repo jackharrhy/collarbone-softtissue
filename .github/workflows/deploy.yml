@@ -13,7 +13,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm ci
-          npm run build --base=/collarbone-softtissue/
+          npm run build -- --base=/collarbone-softtissue/
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
