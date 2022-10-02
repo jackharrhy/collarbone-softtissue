@@ -1,0 +1,1 @@
+:root{font-family:Inter,sans-serif}@supports (font-variation-settings: normal){:root{font-family:Inter var,sans-serif}}*{box-sizing:border-box}html,body,#root{height:100%}body{margin:0}nav{min-height:2rem;display:flex;justify-content:center;align-items:center;gap:0 2rem;border-bottom:1px solid black}#root{display:flex;flex-direction:column}main{flex:1}
